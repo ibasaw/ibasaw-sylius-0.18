@@ -17,6 +17,8 @@
                                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="sylius.authentication.success_handler.class">Sylius\Bundle\UserBundle\Authentication\AuthenticationSuccessHandler</parameter>
+        <parameter key="sylius.authentication.failure_handler.class">Sylius\Bundle\UserBundle\Authentication\AuthenticationFailureHandler</parameter>
         <parameter key="sylius.context.customer.class">Sylius\Bundle\UserBundle\Context\CustomerContext</parameter>
 
         <parameter key="sylius.user.canonicalizer.class">Sylius\Component\User\Canonicalizer\Canonicalizer</parameter>
@@ -40,8 +42,6 @@
         <parameter key="sylius.form.type.user_change_password.class">Sylius\Bundle\UserBundle\Form\Type\UserChangePasswordType</parameter>
         <parameter key="sylius.form.type.gender.class">Sylius\Bundle\UserBundle\Form\Type\GenderType</parameter>
 
-        <parameter key="sylius.form.subscriber.guest_customer.class">Sylius\Bundle\UserBundle\Form\EventListener\GuestCustomerFormSubscriber</parameter>
-
         <parameter key="sylius.listener.default_username.class">Sylius\Bundle\UserBundle\EventListener\DefaultUsernameORMListener</parameter>
         <parameter key="sylius.listener.customer_aware.class">Sylius\Bundle\UserBundle\EventListener\CustomerAwareListener</parameter>
         <parameter key="sylius.listener.user_delete.class">Sylius\Bundle\UserBundle\EventListener\UserDeleteListener</parameter>
@@ -59,9 +59,14 @@
 
         <parameter key="sylius.user.validator.unique_registered_user.class">Sylius\Bundle\UserBundle\Validator\Constraints\RegisteredUserValidator</parameter>
         <parameter key="sylius.user.validator.customer_initializer.class">Sylius\Bundle\UserBundle\Validator\Initializer\CustomerInitializer</parameter>
+
+        <parameter key="sylius.form.model.change_password.class">Sylius\Bundle\UserBundle\Form\Model\ChangePassword</parameter>
     </parameters>
 
     <services>
+        <service id="sylius.authenticaiton.success_handler" class="%sylius.authentication.success_handler.class%" parent="security.authentication.success_handler" public="false" />
+        <service id="sylius.authentication.failure_handler" class="%sylius.authentication.failure_handler.class%" parent="security.authentication.failure_handler" public="false" />
+
         <!-- Customer context -->
         <service id="sylius.context.customer" class="%sylius.context.customer.class%">
             <argument type="service" id="security.token_storage" />
@@ -174,6 +179,10 @@
             <tag name="form.type" alias="sylius_user_reset_password" />
         </service>
         <service id="sylius.form.type.user_change_password" class="%sylius.form.type.user_change_password.class%">
+            <argument type="string">%sylius.form.model.change_password.class%</argument>
+            <argument type="collection">
+                <argument>sylius</argument>
+            </argument>
             <tag name="form.type" alias="sylius_user_change_password" />
         </service>
         <service id="sylius.form.type.gender" class="%sylius.form.type.gender.class%">
@@ -184,13 +193,6 @@
         <service id="sylius.form.event_subscriber.add_user_type" class="%sylius.form.event_subscriber.add_user_type.class%" />
         <service id="sylius.form.event_subscriber.set_customer" class="%sylius.form.event_subscriber.set_customer_type.class%">
             <argument type="service" id="sylius.repository.customer" />
-        </service>
-
-        <!-- Form listener -->
-        <service id="sylius.form.subscriber.guest_customer" class="%sylius.form.subscriber.guest_customer.class%">
-            <argument type="service" id="sylius.repository.customer" />
-            <argument type="service" id="sylius.factory.customer" />
-            <argument type="service" id="sylius.context.customer" />
         </service>
 
         <!-- Validators -->

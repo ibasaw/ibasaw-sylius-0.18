@@ -27,24 +27,11 @@ class CustomerGuestType extends AbstractResourceType
     /**
      * @var EventSubscriberInterface
      */
-<<<<<<< HEAD
-    private $guestCustomerSubscriber;
-=======
     private $setCustomerFormSubscriber;
->>>>>>> dafd2c1... Add scenario for apply discount on nth order for Guest
 
     /**
      * @param string $dataClass
      * @param array $validationGroups
-<<<<<<< HEAD
-     * @param EventSubscriberInterface $guestCustomerSubscriber
-     */
-    public function __construct($dataClass, array $validationGroups, EventSubscriberInterface $guestCustomerSubscriber)
-    {
-        parent::__construct($dataClass, $validationGroups);
-
-        $this->guestCustomerSubscriber = $guestCustomerSubscriber;
-=======
      * @param EventSubscriberInterface $setCustomerFormSubscriber
      */
     public function __construct(
@@ -55,7 +42,6 @@ class CustomerGuestType extends AbstractResourceType
         parent::__construct($dataClass, $validationGroups);
 
         $this->setCustomerFormSubscriber = $setCustomerFormSubscriber;
->>>>>>> dafd2c1... Add scenario for apply discount on nth order for Guest
     }
 
     /**
@@ -67,11 +53,7 @@ class CustomerGuestType extends AbstractResourceType
             ->add('email', 'email', [
                 'label' => 'sylius.form.customer.email',
             ])
-<<<<<<< HEAD
-            ->addEventSubscriber($this->guestCustomerSubscriber)
-=======
             ->addEventSubscriber($this->setCustomerFormSubscriber)
->>>>>>> dafd2c1... Add scenario for apply discount on nth order for Guest
             ->setDataLocked(false)
         ;
     }
