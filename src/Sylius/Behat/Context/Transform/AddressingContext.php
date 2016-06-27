@@ -45,6 +45,7 @@ final class AddressingContext implements Context
 
     /**
      * @Transform /^to "([^"]+)"$/
+     * @Transform /^"([^"]+)" as shipping country$/
      */
     public function createNewAddress($countryName)
     {
@@ -54,6 +55,30 @@ final class AddressingContext implements Context
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @Transform /^address as "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)" for "([^"]+)"$/
+     * @Transform /^address is "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)" for "([^"]+)"$/
+     * @Transform /^address "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)" for "([^"]+)"$/
+     */
+    public function createNewAddressWith($cityName, $street, $postcode, $countryName, $customerName)
+    {
+        $countryCode = $this->countryNameConverter->convertToCode($countryName);
+        $customerName = explode(' ', $customerName);
+        
+        return $this->createAddress($countryCode, $customerName[0], $customerName[1], $cityName, $street, $postcode);
+    }
+
+    /**
+     * @Transform /^do not specify any (shipping|billing) address$/
+     */
+    public function createEmptyAddress()
+    {
+        return $this->addressFactory->createNew();
+    }
+
+    /**
+>>>>>>> dafd2c1... Add scenario for apply discount on nth order for Guest
      * @Transform /^"([^"]+)" addressed it to "([^"]+)", "([^"]+)" "([^"]+)" in the "([^"]+)"$/
      * @Transform /^of "([^"]+)" in the "([^"]+)", "([^"]+)" "([^"]+)", "([^"]+)"$/
      */

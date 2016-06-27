@@ -53,6 +53,7 @@
         <parameter key="sylius.listener.user_mailer_listener.class">Sylius\Bundle\UserBundle\EventListener\MailerListener</parameter>
 
         <parameter key="sylius.form.event_subscriber.add_user_type.class">Sylius\Bundle\UserBundle\Form\EventSubscriber\AddUserFormSubscriber</parameter>
+        <parameter key="sylius.form.event_subscriber.set_customer_type.class">Sylius\Bundle\UserBundle\Form\EventSubscriber\SetCustomerFormSubscriber</parameter>
 
         <parameter key="sylius.controller.user_security.class">Sylius\Bundle\UserBundle\Controller\SecurityController</parameter>
 
@@ -181,6 +182,9 @@
 
         <!-- Form event subscribers-->
         <service id="sylius.form.event_subscriber.add_user_type" class="%sylius.form.event_subscriber.add_user_type.class%" />
+        <service id="sylius.form.event_subscriber.set_customer" class="%sylius.form.event_subscriber.set_customer_type.class%">
+            <argument type="service" id="sylius.repository.customer" />
+        </service>
 
         <!-- Form listener -->
         <service id="sylius.form.subscriber.guest_customer" class="%sylius.form.subscriber.guest_customer.class%">

@@ -120,6 +120,12 @@ final class OrderContext implements Context
 
     /**
      * @Given there is a customer :customer that placed an order :orderNumber
+<<<<<<< HEAD
+=======
+     * @Given there is another customer :customer that placed an order :orderNumber
+     * @Given a customer :customer placed an order :orderNumber
+     * @Given the customer :customer has already placed an order :orderNumber
+>>>>>>> dafd2c1... Add scenario for apply discount on nth order for Guest
      */
     public function thereIsCustomerThatPlacedOrder(CustomerInterface $customer, $orderNumber)
     {

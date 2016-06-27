@@ -224,17 +224,16 @@ class OrderRepository extends CartRepository implements OrderRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function countByCustomerAndPaymentState(CustomerInterface $customer, $state)
+    public function countByCustomer(CustomerInterface $customer)
     {
+<<<<<<< HEAD
         $queryBuilder = $this->createQueryBuilderWithCustomer($customer);
 
         $queryBuilder
+=======
+       return (int) $this->createByCustomerQueryBuilder($customer)
+>>>>>>> dafd2c1... Add scenario for apply discount on nth order for Guest
             ->select('count(o.id)')
-            ->andWhere('o.paymentState = :state')
-            ->setParameter('state', $state)
-        ;
-
-        return (int) $queryBuilder
             ->getQuery()
             ->getSingleScalarResult()
         ;

@@ -265,6 +265,360 @@ final class CheckoutContext implements Context
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @Then /^I should(?:| also) be notified that the "([^"]+)" and the "([^"]+)" in (shipping|billing) details are required$/
+     */
+    public function iShouldBeNotifiedThatTheAndTheInShippingDetailsAreRequired($firstElement, $secondElement, $type)
+    {
+        $this->assertElementValidationMessage($type, $firstElement, sprintf('Please enter %s.', $firstElement));
+        $this->assertElementValidationMessage($type, $secondElement, sprintf('Please enter %s.', $secondElement));
+    }
+
+    /**
+     * @Then I should be informed that my order cannot be shipped to this address
+     */
+    public function iShouldBeInformedThatMyOrderCannotBeShippedToThisAddress()
+    {
+        Assert::true(
+            $this->shippingPage->hasNoShippingMethodsMessage(),
+            'Shipping page should have no shipping methods message but it does not.'
+        );
+    }
+
+    /**
+     * @Then I should be able to log in
+     */
+    public function iShouldBeAbleToLogIn()
+    {
+        Assert::true(
+            $this->addressingPage->canSignIn(),
+            'I should be able to login, but I am not.'
+        );
+    }
+
+    /**
+     * @Then the login form should no longer be accessible
+     */
+    public function theLoginFormShouldNoLongerBeAccessible()
+    {
+        Assert::false(
+            $this->addressingPage->canSignIn(),
+            'I should not be able to login, but I am.'
+        );
+    }
+
+    /**
+     * @Then I should be notified about bad credentials
+     */
+    public function iShouldBeNotifiedAboutBadCredentials()
+    {
+        Assert::true(
+            $this->addressingPage->checkInvalidCredentialsValidation(),
+            'I should see validation error, but I do not.'
+        );
+    }
+
+    /**
+     * @Then my order's shipping address should be to :fullName
+     */
+    public function iShouldSeeThisShippingAddressAsShippingAddress($fullName)
+    {
+        $address = $this->sharedStorage->get('shipping_address_'.StringInflector::nameToLowercaseCode($fullName));
+        Assert::true(
+            $this->summaryPage->hasShippingAddress($address),
+            'Shipping address is improper.'
+        );
+    }
+
+    /**
+     * @Then my order's billing address should be to :fullName
+     */
+    public function iShouldSeeThisBillingAddressAsBillingAddress($fullName)
+    {
+        $address = $this->sharedStorage->get('billing_address_'.StringInflector::nameToLowercaseCode($fullName));
+        Assert::true(
+            $this->summaryPage->hasBillingAddress($address),
+            'Billing address is improper.'
+        );
+    }
+
+    /**
+     * @Then address to :fullName should be used for both shipping and billing of my order`
+     */
+    public function iShouldSeeThisShippingAddressAsShippingAndBillingAddress($fullName)
+    {
+        $this->iShouldSeeThisShippingAddressAsShippingAddress($fullName);
+        $this->iShouldSeeThisBillingAddressAsBillingAddress($fullName);
+    }
+
+    /**
+     * @Given I am at the checkout payment step
+     */
+    public function iAmAtTheCheckoutPaymentStep()
+    {
+        $this->paymentPage->open();
+    }
+
+    /**
+     * @When I complete the payment step
+     */
+    public function iCompleteThePaymentStep()
+    {
+        $this->paymentPage->nextStep();
+    }
+
+    /**
+     * @When I select :paymentMethodName payment method
+     */
+    public function iSelectPaymentMethod($paymentMethodName)
+    {
+        $this->paymentPage->selectPaymentMethod($paymentMethodName);
+    }
+
+    /**
+     * @Then I should not be able to select :paymentMethodName payment method
+     */
+    public function iShouldNotBeAbleToSelectPaymentMethod($paymentMethodName)
+    {
+        Assert::false(
+            $this->paymentPage->hasPaymentMethod($paymentMethodName),
+            sprintf('Payment method "%s" should not be available but it does.', $paymentMethodName)
+        );
+    }
+
+    /**
+     * @When I proceed order with :shippingMethod shipping method and :paymentMethod payment
+     */
+    public function iProceedOrderWithShippingMethodAndPayment($shippingMethod, $paymentMethod)
+    {
+        $this->iSelectShippingMethod($shippingMethod);
+        $this->iCompleteTheShippingStep();
+        $this->iSelectPaymentMethod($paymentMethod);
+        $this->iCompleteThePaymentStep();
+    }
+
+    /**
+     * @Given I should have :quantity :productName products in the cart
+     */
+    public function iShouldHaveProductsInTheCart($quantity, $productName)
+    {
+        Assert::true(
+            $this->summaryPage->hasItemWithProductAndQuantity($productName, $quantity),
+            sprintf('There is no "%s" with quantity %s on order summary page, but it should.', $productName, $quantity)
+        );
+    }
+
+    /**
+     * @Then my order shipping should be :price
+     */
+    public function myOrderShippingShouldBe($price)
+    {
+        Assert::true(
+            $this->summaryPage->hasShippingTotal($price),
+            sprintf('The shipping total should be %s, but it is not.',$price)
+        );
+    }
+
+    /**
+     * @Then /^the ("[^"]+" product) should have unit price discounted by ("\$\d+")$/
+     */
+    public function theShouldHaveUnitPriceDiscountedFor(ProductInterface $product, $amount)
+    {
+        Assert::true(
+            $this->summaryPage->hasProductDiscountedUnitPriceBy($product, $amount),
+            sprintf('Product %s should have discounted price by %s, but it does not have.', $product->getName(), $amount)
+        );
+    }
+
+    /**
+     * @Then /^my order total should be ("\$\d+")$/
+     */
+    public function myOrderTotalShouldBe($total)
+    {
+        Assert::true(
+            $this->summaryPage->hasOrderTotal($total),
+            sprintf('Order total should have %s total, but it does not have.', $total)
+        );
+    }
+
+    /**
+     * @Then my order promotion total should be :promotionTotal
+     */
+    public function myOrderPromotionTotalShouldBe($promotionTotal)
+    {
+        Assert::true(
+            $this->summaryPage->hasPromotionTotal($promotionTotal),
+            sprintf('The total discount should be %s, but it does not.', $promotionTotal)
+        );
+    }
+
+    /**
+     * @Then :promotionName should be applied to my order
+     */
+    public function shouldBeAppliedToMyOrder($promotionName)
+    {
+        Assert::true(
+            $this->summaryPage->hasPromotion($promotionName),
+            sprintf('The promotion %s should appear on the page, but it does not.', $promotionName)
+        );
+    }
+
+    /**
+     * @Given my tax total should be :taxTotal
+     */
+    public function myTaxTotalShouldBe($taxTotal)
+    {
+        Assert::true(
+            $this->summaryPage->hasTaxTotal($taxTotal),
+            sprintf('The tax total should be %s, but it does not.', $taxTotal)
+        );
+    }
+
+    /**
+     * @Then my order's shipping method should be :shippingMethod
+     */
+    public function myOrderSShippingMethodShouldBe(ShippingMethodInterface $shippingMethod)
+    {
+        Assert::true(
+            $this->summaryPage->hasShippingMethod($shippingMethod),
+            sprintf('I should see %s shipping method, but I do not.', $shippingMethod->getName())
+        );
+    }
+
+    /**
+     * @Then my order's payment method should be :paymentMethod
+     */
+    public function myOrderSPaymentMethodShouldBe(PaymentMethodInterface $paymentMethod)
+    {
+        Assert::true(
+            $this->summaryPage->hasPaymentMethod($paymentMethod),
+            sprintf('I should see %s payment method, but i do not.', $paymentMethod->getName())
+        );
+    }
+
+    /**
+     * @Then I should be redirected to the homepage
+     */
+    public function iShouldBeRedirectedToTheHomepage()
+    {
+        Assert::true(
+            $this->homePage->isOpen(),
+            'Shop homepage should be opened, but it is not.'
+        );
+    }
+
+    /**
+     * @Then I should be redirected to the addressing step
+     */
+    public function iShouldBeRedirectedToTheAddressingStep()
+    {
+        Assert::true(
+            $this->addressingPage->isOpen(),
+            'Checkout addressing step should be opened, but it is not.'
+        );
+    }
+
+    /**
+     * @Given I should be able to go to the shipping step again
+     */
+    public function iShouldBeAbleToGoToTheShippingStepAgain()
+    {
+        $this->addressingPage->nextStep();
+
+        Assert::true(
+            $this->shippingPage->isOpen(),
+            'Checkout shipping step should be opened, but it is not.'
+        );
+    }
+
+    /**
+     * @Then I should be redirected to the shipping step
+     */
+    public function iShouldBeRedirectedToTheShippingStep()
+    {
+        Assert::true(
+            $this->shippingPage->isOpen(),
+            'Checkout shipping step should be opened, but it is not.'
+        );
+    }
+
+    /**
+     * @Given I should be able to go to the payment step again
+     */
+    public function iShouldBeAbleToGoToThePaymentStepAgain()
+    {
+        $this->shippingPage->nextStep();
+
+        Assert::true(
+            $this->paymentPage->isOpen(),
+            'Checkout payment step should be opened, but it is not.'
+        );
+    }
+
+    /**
+     * @Then I should be redirected to the payment step
+     */
+    public function iShouldBeRedirectedToThePaymentStep()
+    {
+        Assert::true(
+            $this->paymentPage->isOpen(),
+            'Checkout payment step should be opened, but it is not.'
+        );
+    }
+
+    /**
+     * @Given I should be able to go to the summary page again
+     */
+    public function iShouldBeAbleToGoToTheSummaryPageAgain()
+    {
+        $this->paymentPage->nextStep();
+
+        Assert::true(
+            $this->summaryPage->isOpen(),
+            'Checkout summary page should be opened, but it is not.'
+        );
+    }
+
+    /**
+     * @Given I should see shipping method :shippingMethodName with fee :fee
+     */
+    public function iShouldSeeShippingFee($shippingMethodName, $fee)
+    {
+        Assert::true(
+            $this->shippingPage->hasShippingMethodFee($shippingMethodName, $fee), 
+            sprintf('The shipping fee should be %s, but it does not.', $fee)
+        );
+    }
+
+    /**
+     * @When /^I complete addressing step with email "([^"]+)" and ("([^"]+)" as shipping country)$/
+     */
+    public function iCompleteAddressingStepWithEmail($email, AddressInterface $address)
+    {
+        $this->iSpecifiedTheShippingAddress($address);
+        $this->iSpecifyTheEmail($email);
+        $this->iCompleteTheAddressingStep();
+    }
+
+    /**
+     * @param string $type
+     * @param string $element
+     * @param string $expectedMessage
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function assertElementValidationMessage($type, $element, $expectedMessage)
+    {
+        $element = sprintf('%s_%s', $type, implode('_', explode(' ', $element)));
+        Assert::true(
+            $this->addressingPage->checkValidationMessageFor($element, $expectedMessage),
+            sprintf('The %s should be required.', $element)
+        );
+    }
+
+    /**
+>>>>>>> dafd2c1... Add scenario for apply discount on nth order for Guest
      * @return OrderInterface
      *
      * @throws \RuntimeException
