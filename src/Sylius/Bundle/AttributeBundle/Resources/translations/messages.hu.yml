@@ -1,0 +1,12 @@
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+sylius:
+    form:
+        attribute:
+            add: Hozzáadás
+            code: Kód
+            name: Név
+            type: Típus
+        attribute_type:
+            configuration: Konfiguráció

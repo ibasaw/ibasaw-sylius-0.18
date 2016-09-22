@@ -1,0 +1,17 @@
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+sylius:
+    form:
+        review:
+            header: Shto nje recension
+            rating: Vlersimi
+            title: Titulli
+            comment: Koment
+            author: Autori
+            status:
+                label: Statusi
+                new: E re
+                approved: I aprovuar
+                rejected: I refuzuar
+            submit: Vazhdo

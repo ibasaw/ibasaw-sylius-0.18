@@ -1,0 +1,13 @@
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+sylius:
+    form:
+        attribute:
+            add: Pridėti
+            choices: Pasirinkimai
+            code: Kodas
+            name: Pavadinimas
+            type: Tipas
+        attribute_type:
+            configuration: Konfigūracija

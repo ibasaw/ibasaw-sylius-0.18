@@ -1,0 +1,8 @@
+sylius:
+    form:
+        channel:
+            name: Name
+            description: Description
+            url: URL
+            enabled: Enabled
+            color: Color

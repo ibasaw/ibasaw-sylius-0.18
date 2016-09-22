@@ -1,0 +1,151 @@
+sylius:
+    form:
+        action:
+            add_product_configuration:
+                price: Unit price
+                quantity: Quantity
+                variant: Variant
+            customer_group:
+                Customer group
+        block:
+            body: Body
+            id: ID
+            title: Title
+        cart:
+            coupon: Coupon
+        checkout:
+            addressing:
+                different_billing_address: Use different address for billing?
+            payment_method: Payment Method
+            shipping_method: Shipping Method
+        promotion:
+            channels: Channels
+        coupon:
+            per_customer_usage_limit: Per-Customer Usage Limit
+        group:
+            name: Name
+            roles: Roles
+        channel:
+            taxonomies: Taxonomies
+            locale_default: Default locale
+            locales: Locales
+            currency_default: Default currency
+            currencies: Currencies
+            shipping_methods: Shipping Methods
+            payment_methods: Payment Methods
+            theme: Theme
+            hostname: Hostname
+        image:
+            file: Image
+        locale:
+            code: Code
+            enabled: Enabled
+        order_filter:
+            created_at_from: Created after
+            created_at_to: Created before
+            number: Number
+            total_from: From
+            total_to: To
+            payment_state: Payment state
+            channel: All channels
+        page:
+            body: Body
+            id: ID
+            title: Title
+        product:
+            restricted_zone: Restricted zone
+            shipping_category: Shipping category
+            short_description: Short description
+            variant_selection_method: Variant selection method
+            main_taxon: Main taxon
+        product_filter:
+            name: Name
+            sku: SKU
+        product_variant:
+            tax_category: Tax category
+        settings:
+            general:
+                currency: Default currency
+                locale: Language
+                meta_description: Meta description
+                meta_keywords: Meta keywords
+                title: Page title
+                tracking_code: Tracking code (for example: Google Analytics code)
+            taxation:
+                default_tax_zone: Default tax zone
+                default_tax_calculation_strategy: Default tax calculation strategy
+            security:
+                enabled: Enable?
+        shipment_filter:
+            created_at_from: From
+            created_at_to: To
+            number: Order number
+            shipping_address: Ship to name
+            channel: All channels
+        payment_filter:
+            created_at_from: From
+            created_at_to: To
+            number: Order number
+            billing_address: Bill to name
+            channel: All channels
+        shipping_method:
+            zone: Zone
+        taxon:
+            file: Select image
+        taxonomy:
+            file: Select image
+        user:
+            billing_address: Billing address
+            different_billing_address: Use different address for billing?
+            enabled: Enabled
+            first_name: First name
+            groups: Groups
+            roles: Roles
+            last_name: Last name
+            password: Password
+            shipping_address: Shipping address
+        user_filter:
+            query: Search
+        variant:
+            available_on_demand: Available on demand
+            depth: Depth
+            height: Height
+            images: Images
+            on_hand: Current stock
+            price: Price
+            original_price: Original price
+            sku: SKU
+            weight: Weight
+            width: Width
+        attribute:
+            product_attribute_value:
+                attribute: Attribute
+                value: Value
+        guest:
+            email: Email
+        product_association:
+            product: Associated product
+            type: Association type
+        product_association_type:
+            name: Name
+        promotion_rule:
+            contains_taxon:
+                taxon: Taxon
+                count: Count
+            taxon:
+                taxons: Taxons
+            total_of_items_from_taxon:
+                taxon: Taxon
+                amount: Amount
+
+    email:
+        order_confirmation:
+            name: Order confirmation
+        order_comment:
+            name: Order comment
+        shipment_confirmation:
+            name: Shipment confirmation
+        user_confirmation:
+            name: User confirmation
+        password_reset:
+            name: Password reset
