@@ -209,7 +209,7 @@ class OrderRepository extends CartRepository implements OrderRepositoryInterface
 
         $count = (int) $queryBuilder
             ->getQuery()
-            ->getSingleScalarResult()
+            ->getOneOrNullResult()
         ;
 
         return $count;
