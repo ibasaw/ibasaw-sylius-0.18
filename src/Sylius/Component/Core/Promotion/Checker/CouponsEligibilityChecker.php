@@ -67,7 +67,9 @@ class CouponsEligibilityChecker extends BaseCouponsEligibilityChecker
         }
 
         if (null === $customer) {
-            return false;
+            $placedOrdersNumber = 0;
+        }else{
+            $placedOrdersNumber = $this->orderRepository->countByCustomerAndCoupon($customer, $coupon);
         }
 
         $placedOrdersNumber = $this->orderRepository->countByCustomerAndCoupon($customer, $coupon);
