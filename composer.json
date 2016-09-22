@@ -1,5 +1,5 @@
 {
-    "name": "sylius/sylius",
+    "name": "ibasaw/ibasaw-sylius-0.18",
     "type": "project",
     "description": "E-Commerce platform for PHP, based on Symfony framework.",
     "license": "MIT",
