@@ -20,10 +20,10 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 interface PaymentRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @param array|null $criteria
-     * @param array|null $sorting
+     * @param array $criteria
+     * @param array $sorting
      *
      * @return Pagerfanta
      */
-    public function createFilterPaginator(array $criteria = null, array $sorting = null);
+    public function createFilterPaginator(array $criteria, array $sorting);
 }
