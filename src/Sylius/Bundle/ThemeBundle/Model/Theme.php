@@ -202,7 +202,7 @@ class Theme implements ThemeInterface
      */
     private function assertNameIsValid($name)
     {
-        $pattern = '/^[a-z\-]+\/[a-z\-]+$/i';
+        $pattern = '/^[a-z\-]+\/[a-z\-]+[a-z|0-9]$/i';
         if (false === (bool) preg_match($pattern, $name)) {
             throw new \InvalidArgumentException(sprintf(
                 'Given name "%s" does not match regular expression "%s".',
